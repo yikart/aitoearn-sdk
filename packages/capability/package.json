@@ -1,0 +1,55 @@
+{
+  "name": "@aitoearn/capability",
+  "version": "1.0.0",
+  "description": "AiToEarn capability manifest: single source of truth and generators for MCP tools, GUI forms, SDK clients, OpenAPI and validation rules",
+  "license": "MIT",
+  "type": "commonjs",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yikart/aitoearn-sdk.git",
+    "directory": "packages/capability"
+  },
+  "homepage": "https://github.com/yikart/aitoearn-sdk/tree/main/packages/capability#readme",
+  "bugs": {
+    "url": "https://github.com/yikart/aitoearn-sdk/issues"
+  },
+  "keywords": [
+    "aitoearn",
+    "capability",
+    "mcp",
+    "codegen",
+    "openapi"
+  ],
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "node ../../scripts/prepublish-guard.mjs"
+  },
+  "dependencies": {
+    "@aitoearn/plugin-api": "1.0.0",
+    "yaml": "^2.8.3",
+    "zod": "^4.3.6"
+  }
+}

@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+*.tsbuildinfo
+.DS_Store
+npm-debug.log*
+pnpm-debug.log*
+.changeset/*.md
+!.changeset/README.md
+!.changeset/config.json

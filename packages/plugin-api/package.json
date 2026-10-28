@@ -1,0 +1,53 @@
+{
+  "name": "@aitoearn/plugin-api",
+  "version": "1.0.0",
+  "description": "AiToEarn plugin SDK: plugin.json manifest schema, adapter contract, host services and error codes",
+  "license": "MIT",
+  "type": "commonjs",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yikart/aitoearn-sdk.git",
+    "directory": "packages/plugin-api"
+  },
+  "homepage": "https://github.com/yikart/aitoearn-sdk/tree/main/packages/plugin-api#readme",
+  "bugs": {
+    "url": "https://github.com/yikart/aitoearn-sdk/issues"
+  },
+  "keywords": [
+    "aitoearn",
+    "plugin",
+    "manifest",
+    "channel-adapter",
+    "sdk"
+  ],
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "node ../../scripts/prepublish-guard.mjs"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  }
+}

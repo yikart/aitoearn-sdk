@@ -1,0 +1,26 @@
+{
+  "name": "aitoearn-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "description": "AiToEarn public SDK workspace: plugin API, capability manifest tooling and plugin CLI published to npm",
+  "license": "MIT",
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter \"./packages/**\" run build",
+    "test": "pnpm -r --filter \"./packages/**\" run test",
+    "typecheck": "pnpm -r --filter \"./packages/**\" run typecheck",
+    "clean": "pnpm -r --filter \"./packages/**\" run clean",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "2.29.5",
+    "@types/node": "25.6.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.5"
+  }
+}

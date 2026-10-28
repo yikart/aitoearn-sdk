@@ -1,0 +1,52 @@
+{
+  "name": "@aitoearn/plugin-cli",
+  "version": "1.0.0",
+  "description": "AiToEarn plugin developer CLI: scaffold, verify, pack, sign channel adapters / hooks / skills and generate surfaces from capability.yaml",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
+  "bin": {
+    "aitoearn-plugin": "./dist/main.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yikart/aitoearn-sdk.git",
+    "directory": "packages/plugin-cli"
+  },
+  "homepage": "https://github.com/yikart/aitoearn-sdk/tree/main/packages/plugin-cli#readme",
+  "bugs": {
+    "url": "https://github.com/yikart/aitoearn-sdk/issues"
+  },
+  "keywords": [
+    "aitoearn",
+    "plugin",
+    "cli",
+    "channel-adapter",
+    "capability",
+    "content-publish"
+  ],
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json && node scripts/postbuild.mjs",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "node ../../scripts/prepublish-guard.mjs"
+  },
+  "dependencies": {
+    "@aitoearn/capability": "1.0.0",
+    "@aitoearn/plugin-api": "1.0.0",
+    "commander": "^14.0.3"
+  }
+}
