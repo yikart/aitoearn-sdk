@@ -1,0 +1,66 @@
+[
+  {
+    "action": "list_channels",
+    "required": [],
+    "maxLength": {},
+    "maxItems": {},
+    "formats": {}
+  },
+  {
+    "action": "get_post_metrics",
+    "required": [
+      "externalId"
+    ],
+    "maxLength": {},
+    "maxItems": {},
+    "formats": {}
+  },
+  {
+    "action": "create_draft",
+    "required": [
+      "channelId",
+      "text"
+    ],
+    "maxLength": {
+      "text": 1000
+    },
+    "maxItems": {},
+    "formats": {}
+  },
+  {
+    "action": "upload_asset",
+    "required": [
+      "url",
+      "alt"
+    ],
+    "maxLength": {
+      "alt": 200
+    },
+    "maxItems": {},
+    "formats": {
+      "url": "uri"
+    }
+  },
+  {
+    "action": "publish_post",
+    "required": [
+      "channelId",
+      "text",
+      "assetIds"
+    ],
+    "maxLength": {
+      "text": 1000
+    },
+    "maxItems": {},
+    "formats": {}
+  },
+  {
+    "action": "delete_post",
+    "required": [
+      "externalId"
+    ],
+    "maxLength": {},
+    "maxItems": {},
+    "formats": {}
+  }
+]

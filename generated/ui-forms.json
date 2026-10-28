@@ -1,0 +1,123 @@
+[
+  {
+    "action": "list_channels",
+    "title": "列出已授权的渠道账号",
+    "confirmRequired": false,
+    "fields": []
+  },
+  {
+    "action": "get_post_metrics",
+    "title": "查询已发布内容的阅读数据",
+    "confirmRequired": false,
+    "fields": [
+      {
+        "name": "externalId",
+        "widget": "text",
+        "label": "外部平台内容 ID",
+        "required": true,
+        "advanced": false
+      },
+      {
+        "name": "metrics",
+        "widget": "multi-select",
+        "label": "指标列表",
+        "required": false,
+        "advanced": false
+      }
+    ]
+  },
+  {
+    "action": "create_draft",
+    "title": "创建发布草稿",
+    "confirmRequired": false,
+    "fields": [
+      {
+        "name": "channelId",
+        "widget": "text",
+        "label": "目标渠道",
+        "required": true,
+        "advanced": false
+      },
+      {
+        "name": "text",
+        "widget": "textarea",
+        "label": "正文",
+        "required": true,
+        "advanced": false,
+        "maxLength": 1000
+      }
+    ]
+  },
+  {
+    "action": "upload_asset",
+    "title": "上传图片素材",
+    "confirmRequired": false,
+    "fields": [
+      {
+        "name": "url",
+        "widget": "uploader",
+        "label": "图片地址",
+        "required": true,
+        "advanced": false
+      },
+      {
+        "name": "alt",
+        "widget": "text",
+        "label": "替代文本",
+        "required": true,
+        "advanced": false,
+        "maxLength": 200
+      }
+    ]
+  },
+  {
+    "action": "publish_post",
+    "title": "发布图文到指定渠道",
+    "confirmRequired": true,
+    "fields": [
+      {
+        "name": "channelId",
+        "widget": "text",
+        "label": "目标渠道",
+        "required": true,
+        "advanced": false
+      },
+      {
+        "name": "text",
+        "widget": "textarea",
+        "label": "正文",
+        "required": true,
+        "advanced": false,
+        "maxLength": 1000
+      },
+      {
+        "name": "assetIds",
+        "widget": "uploader",
+        "label": "配图",
+        "required": true,
+        "advanced": false
+      },
+      {
+        "name": "visibility",
+        "widget": "select",
+        "label": "可见范围",
+        "required": false,
+        "advanced": false
+      }
+    ]
+  },
+  {
+    "action": "delete_post",
+    "title": "删除已发布内容",
+    "confirmRequired": true,
+    "fields": [
+      {
+        "name": "externalId",
+        "widget": "text",
+        "label": "外部平台内容 ID",
+        "required": true,
+        "advanced": false
+      }
+    ]
+  }
+]

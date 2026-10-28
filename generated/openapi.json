@@ -1,0 +1,266 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AiToEarn Capability API",
+    "version": "v1"
+  },
+  "paths": {
+    "/actions/list_channels": {
+      "post": {
+        "operationId": "list_channels",
+        "summary": "列出已授权的渠道账号",
+        "x-side-effect": "read",
+        "x-confirm": "none",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "required": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/actions/get_post_metrics": {
+      "post": {
+        "operationId": "get_post_metrics",
+        "summary": "查询已发布内容的阅读数据",
+        "x-side-effect": "read",
+        "x-confirm": "none",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "externalId": {
+                    "type": "string",
+                    "title": "外部平台内容 ID"
+                  },
+                  "metrics": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "指标列表",
+                    "default": [
+                      "basic"
+                    ]
+                  }
+                },
+                "required": [
+                  "externalId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "409": {
+            "description": "业务错误: AIT-AG-001"
+          }
+        }
+      }
+    },
+    "/actions/create_draft": {
+      "post": {
+        "operationId": "create_draft",
+        "summary": "创建发布草稿",
+        "x-side-effect": "draft",
+        "x-confirm": "none",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channelId": {
+                    "type": "string",
+                    "title": "目标渠道"
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "title": "正文"
+                  },
+                  "topics": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "话题标签",
+                    "deprecated": true
+                  }
+                },
+                "required": [
+                  "channelId",
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/actions/upload_asset": {
+      "post": {
+        "operationId": "upload_asset",
+        "summary": "上传图片素材",
+        "x-side-effect": "draft",
+        "x-confirm": "none",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "title": "图片地址"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "title": "替代文本"
+                  }
+                },
+                "required": [
+                  "url",
+                  "alt"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "409": {
+            "description": "业务错误: AIT-AG-003"
+          }
+        }
+      }
+    },
+    "/actions/publish_post": {
+      "post": {
+        "operationId": "publish_post",
+        "summary": "发布图文到指定渠道",
+        "x-side-effect": "write",
+        "x-confirm": "required",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channelId": {
+                    "type": "string",
+                    "title": "目标渠道"
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "title": "正文"
+                  },
+                  "assetIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "配图"
+                  },
+                  "visibility": {
+                    "type": "string",
+                    "title": "可见范围",
+                    "default": "public"
+                  },
+                  "dryRun": {
+                    "type": "boolean",
+                    "default": true,
+                    "deprecated": true
+                  }
+                },
+                "required": [
+                  "channelId",
+                  "text",
+                  "assetIds"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "409": {
+            "description": "业务错误: AIT-AG-001, AIT-AG-002, AIT-AG-004"
+          }
+        }
+      }
+    },
+    "/actions/delete_post": {
+      "post": {
+        "operationId": "delete_post",
+        "summary": "删除已发布内容",
+        "x-side-effect": "write",
+        "x-confirm": "required",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "externalId": {
+                    "type": "string",
+                    "title": "外部平台内容 ID"
+                  },
+                  "dryRun": {
+                    "type": "boolean",
+                    "default": true,
+                    "deprecated": true
+                  }
+                },
+                "required": [
+                  "externalId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "409": {
+            "description": "业务错误: AIT-AG-001, AIT-AG-005"
+          }
+        }
+      }
+    }
+  }
+}

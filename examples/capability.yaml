@@ -1,0 +1,142 @@
+# AiToEarn 能力清单示例
+# 面向第三方厂商/Agent 集成方：声明平台开放哪些操作，由 @airongrong/capability
+# 派生出 MCP tools / GUI 表单 / OpenAPI / SDK 类型 / 校验规则五个表面。
+#
+# 约定：
+#   - 必填 = 没有 default 且没有 hidden: true
+#   - sideEffect: read（只读）| draft（产生草稿，不对外生效）| write（真实写操作）
+#   - write 操作必须 confirm: required
+#   - type: string | number | boolean | url | channelId | array
+
+version: 1
+
+actions:
+  # ---------- 只读操作 ----------
+
+  list_channels:
+    summary: 列出已授权的渠道账号
+    description: 返回当前用户已完成授权、可用于发布的所有渠道账号（微博、公众号等）。
+    sideEffect: read
+    confirm: none
+    backend: [listChannels]
+    inputs: {}
+    returns:
+      channels: array
+    errors: []
+
+  get_post_metrics:
+    summary: 查询已发布内容的阅读数据
+    sideEffect: read
+    confirm: none
+    backend: [queryMetrics]
+    inputs:
+      externalId:
+        type: string
+        label: 外部平台内容 ID
+      metrics:
+        type: array
+        label: 指标列表
+        default: [basic]
+        ui: multi-select
+    returns:
+      views: number
+      likes: number
+      collectedAt: string
+    errors: [AIT-AG-001]
+
+  # ---------- 草稿操作（不对外生效）----------
+
+  create_draft:
+    summary: 创建发布草稿
+    description: 生成一份待发布的草稿，保存到 AiToEarn 草稿箱，不会真实发布。
+    sideEffect: draft
+    confirm: none
+    backend: [createDraft]
+    inputs:
+      channelId:
+        type: channelId
+        label: 目标渠道
+      text:
+        type: string
+        maxLength: 1000
+        label: 正文
+        ui: textarea
+      topics:
+        type: array
+        label: 话题标签
+        ui: multi-select
+        hidden: true
+    returns:
+      draftId: string
+    errors: []
+
+  upload_asset:
+    summary: 上传图片素材
+    sideEffect: draft
+    confirm: none
+    backend: [uploadAsset]
+    inputs:
+      url:
+        type: url
+        label: 图片地址
+      alt:
+        type: string
+        maxLength: 200
+        label: 替代文本
+        ui: text
+    returns:
+      assetId: string
+    errors: [AIT-AG-003]
+
+  # ---------- 写操作（真实生效，必须二次确认）----------
+
+  publish_post:
+    summary: 发布图文到指定渠道
+    description: 把草稿真实发布到外部平台。写操作，调用前必须经用户确认。
+    sideEffect: write
+    confirm: required
+    backend: [publishChannelTask]
+    inputs:
+      channelId:
+        type: channelId
+        label: 目标渠道
+      text:
+        type: string
+        maxLength: 1000
+        label: 正文
+        ui: textarea
+      assetIds:
+        type: array
+        label: 配图
+        ui: uploader
+      visibility:
+        type: string
+        label: 可见范围
+        default: public
+        ui: select
+      dryRun:
+        type: boolean
+        default: true
+        hidden: true
+    returns:
+      externalId: string
+      url: url
+      publishedAt: string
+    errors: [AIT-AG-001, AIT-AG-002, AIT-AG-004]
+
+  delete_post:
+    summary: 删除已发布内容
+    sideEffect: write
+    confirm: required
+    backend: [deleteChannelPost]
+    inputs:
+      externalId:
+        type: string
+        label: 外部平台内容 ID
+      dryRun:
+        type: boolean
+        default: true
+        hidden: true
+    returns:
+      deleted: boolean
+    errors: [AIT-AG-001, AIT-AG-005]

@@ -1,0 +1,198 @@
+[
+  {
+    "name": "list_channels",
+    "description": "列出已授权的渠道账号",
+    "sideEffect": "read",
+    "confirm": "none",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "errors": [],
+    "backend": [
+      "listChannels"
+    ]
+  },
+  {
+    "name": "get_post_metrics",
+    "description": "查询已发布内容的阅读数据。错误码: AIT-AG-001",
+    "sideEffect": "read",
+    "confirm": "none",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "type": "string",
+          "title": "外部平台内容 ID"
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "指标列表",
+          "default": [
+            "basic"
+          ]
+        }
+      },
+      "required": [
+        "externalId"
+      ]
+    },
+    "errors": [
+      "AIT-AG-001"
+    ],
+    "backend": [
+      "queryMetrics"
+    ]
+  },
+  {
+    "name": "create_draft",
+    "description": "创建发布草稿。产生草稿，不改变线上状态",
+    "sideEffect": "draft",
+    "confirm": "none",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "title": "目标渠道"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 1000,
+          "title": "正文"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "话题标签",
+          "deprecated": true
+        }
+      },
+      "required": [
+        "channelId",
+        "text"
+      ]
+    },
+    "errors": [],
+    "backend": [
+      "createDraft"
+    ]
+  },
+  {
+    "name": "upload_asset",
+    "description": "上传图片素材。产生草稿，不改变线上状态。错误码: AIT-AG-003",
+    "sideEffect": "draft",
+    "confirm": "none",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "title": "图片地址"
+        },
+        "alt": {
+          "type": "string",
+          "maxLength": 200,
+          "title": "替代文本"
+        }
+      },
+      "required": [
+        "url",
+        "alt"
+      ]
+    },
+    "errors": [
+      "AIT-AG-003"
+    ],
+    "backend": [
+      "uploadAsset"
+    ]
+  },
+  {
+    "name": "publish_post",
+    "description": "发布图文到指定渠道。写操作：默认 dryRun 返回将发生的变更，需用户确认后才真正执行。错误码: AIT-AG-001, AIT-AG-002, AIT-AG-004",
+    "sideEffect": "write",
+    "confirm": "required",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "channelId": {
+          "type": "string",
+          "title": "目标渠道"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 1000,
+          "title": "正文"
+        },
+        "assetIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "配图"
+        },
+        "visibility": {
+          "type": "string",
+          "title": "可见范围",
+          "default": "public"
+        },
+        "dryRun": {
+          "type": "boolean",
+          "default": true,
+          "deprecated": true
+        }
+      },
+      "required": [
+        "channelId",
+        "text",
+        "assetIds"
+      ]
+    },
+    "errors": [
+      "AIT-AG-001",
+      "AIT-AG-002",
+      "AIT-AG-004"
+    ],
+    "backend": [
+      "publishChannelTask"
+    ]
+  },
+  {
+    "name": "delete_post",
+    "description": "删除已发布内容。写操作：默认 dryRun 返回将发生的变更，需用户确认后才真正执行。错误码: AIT-AG-001, AIT-AG-005",
+    "sideEffect": "write",
+    "confirm": "required",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "type": "string",
+          "title": "外部平台内容 ID"
+        },
+        "dryRun": {
+          "type": "boolean",
+          "default": true,
+          "deprecated": true
+        }
+      },
+      "required": [
+        "externalId"
+      ]
+    },
+    "errors": [
+      "AIT-AG-001",
+      "AIT-AG-005"
+    ],
+    "backend": [
+      "deleteChannelPost"
+    ]
+  }
+]
