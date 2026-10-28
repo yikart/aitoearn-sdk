@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { PLUGIN_ID_PATTERN, PluginError, PluginErrorCode, PluginType } from '@aitoearn/plugin-api'
+import { PLUGIN_ID_PATTERN, PluginError, PluginErrorCode, PluginType } from '@airongrong/plugin-api'
 
 const TEMPLATES: Record<PluginType, { entry: string, manifest: (id: string) => Record<string, unknown> }> = {
   [PluginType.Hook]: {

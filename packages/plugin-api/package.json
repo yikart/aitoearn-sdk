@@ -1,6 +1,6 @@
 {
-  "name": "@aitoearn/plugin-api",
-  "version": "1.0.0",
+  "name": "@airongrong/plugin-api",
+  "version": "1.0.0-beta.0",
   "description": "AiToEarn plugin SDK: plugin.json manifest schema, adapter contract, host services and error codes",
   "license": "MIT",
   "type": "commonjs",

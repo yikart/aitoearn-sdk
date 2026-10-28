@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { writeFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
-import { PluginType } from '@aitoearn/plugin-api'
+import { PluginType } from '@airongrong/plugin-api'
 import { Command } from 'commander'
 import { printErrorLine, printLine } from './cli-output'
 import { collectPackageFiles, verifyPluginPackage } from './package-files'
@@ -73,8 +73,8 @@ program
   .option('--out <dir>', '输出目录', join(process.cwd(), 'generated'))
   .option('--surface <surfaces>', '逗号分隔: mcp,ui,openapi,sdk,validation,all', 'all')
   .action(async (options: { from: string, out: string, surface: string }) => {
-    const { loadCapabilityManifest } = await import('@aitoearn/capability')
-    const { generateAllSurfaces } = await import('@aitoearn/capability')
+    const { loadCapabilityManifest } = await import('@airongrong/capability')
+    const { generateAllSurfaces } = await import('@airongrong/capability')
     const { mkdir, writeFile } = await import('node:fs/promises')
     const manifest = await loadCapabilityManifest(resolve(options.from))
     const surfaces = generateAllSurfaces(manifest)

@@ -1,9 +1,9 @@
-import type { PluginManifest } from '@aitoearn/plugin-api'
+import type { PluginManifest } from '@airongrong/plugin-api'
 import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import { join, relative } from 'node:path'
-import { assertPluginEntrySource, PluginError, PluginErrorCode, verifyManifest } from '@aitoearn/plugin-api'
+import { assertPluginEntrySource, PluginError, PluginErrorCode, verifyManifest } from '@airongrong/plugin-api'
 
 export interface PluginPackageFiles {
   dir: string

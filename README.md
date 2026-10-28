@@ -10,20 +10,20 @@ AiToEarn 对外发布的 npm 包集合。与私有后端仓库（`yikart/AiToEar
 
 | 仓库目录 | npm 包 | 说明 |
 | --- | --- | --- |
-| `packages/plugin-api` | [@aitoearn/plugin-api](https://www.npmjs.com/package/@aitoearn/plugin-api) | 插件 SDK：`plugin.json` 清单 schema（zod）、渠道适配器契约、宿主服务类型、错误码、API 兼容性判定。插件作者**唯一**需要依赖的包 |
-| `packages/capability` | [@aitoearn/capability](https://www.npmjs.com/package/@aitoearn/capability) | `capability.yaml` 单一事实源：一个文件派生 MCP tools / GUI 表单 / OpenAPI / SDK 类型 / 校验规则五个表面 |
-| `packages/plugin-cli` | [@aitoearn/plugin-cli](https://www.npmjs.com/package/@aitoearn/plugin-cli) | 插件开发 CLI（`aitoearn-plugin`）：`new` / `verify` / `pack` / `sign` / `keygen` / `cap` |
+| `packages/plugin-api` | [@airongrong/plugin-api](https://www.npmjs.com/package/@airongrong/plugin-api) | 插件 SDK：`plugin.json` 清单 schema（zod）、渠道适配器契约、宿主服务类型、错误码、API 兼容性判定。插件作者**唯一**需要依赖的包 |
+| `packages/capability` | [@airongrong/capability](https://www.npmjs.com/package/@airongrong/capability) | `capability.yaml` 单一事实源：一个文件派生 MCP tools / GUI 表单 / OpenAPI / SDK 类型 / 校验规则五个表面 |
+| `packages/plugin-cli` | [@airongrong/plugin-cli](https://www.npmjs.com/package/@airongrong/plugin-cli) | 插件开发 CLI（`aitoearn-plugin`）：`new` / `verify` / `pack` / `sign` / `keygen` / `cap` |
 
 三个包版本**固定联动**（changesets `fixed` 分组），始终一起升版。
 
 ## 包使用指南
 
-### @aitoearn/plugin-api —— 插件作者与宿主共用
+### @airongrong/plugin-api —— 插件作者与宿主共用
 
 插件作者**唯一**需要依赖的包：纯类型 + 校验逻辑，零 NestJS / 零宿主内部依赖。
 
 ```bash
-pnpm add @aitoearn/plugin-api
+pnpm add @airongrong/plugin-api
 ```
 
 | 模块 | 内容 |
@@ -44,7 +44,7 @@ import {
   ValidationIssueSeverity,
   type ChannelAdapter,
   type HostServices,
-} from '@aitoearn/plugin-api'
+} from '@airongrong/plugin-api'
 
 export default function activate(host: HostServices): { adapter: ChannelAdapter } {
   return {
@@ -92,7 +92,7 @@ export default function activate(host: HostServices): { adapter: ChannelAdapter 
 **用法二：写钩子（hook）** —— 校验、审计类扩展，无渠道权限
 
 ```ts
-import type { HookPluginModule } from '@aitoearn/plugin-api'
+import type { HookPluginModule } from '@airongrong/plugin-api'
 
 export default function activate(): HookPluginModule {
   return {
@@ -109,11 +109,11 @@ export default function activate(): HookPluginModule {
 **用法三：宿主侧校验与门禁**（后端按精确版本号依赖，见 `.npmrc` 的 `link-workspace-packages`）
 
 ```bash
-pnpm add @aitoearn/plugin-api
+pnpm add @airongrong/plugin-api
 ```
 
 ```ts
-import { isApiCompatible, verifyManifest } from '@aitoearn/plugin-api'
+import { isApiCompatible, verifyManifest } from '@airongrong/plugin-api'
 
 const manifest = verifyManifest(JSON.parse(raw))
 // 非法清单抛 PluginError（code: AIT-PL-001）
@@ -124,14 +124,14 @@ if (!isApiCompatible(manifest.apiVersion)) {
 }
 ```
 
-**entry 硬约束**：插件产物必须是单文件 ESM（`dist/*.mjs`，带 sha256 指纹），且只允许 `import '@aitoearn/plugin-api'`（`ALLOWED_ENTRY_IMPORT`）；动态 `import()` 的参数同样必须是该字面量——计算型写法（如 `import('node:' + 'fs')`）一律拒绝。CLI 的 verify/pack 与宿主加载共用 `assertPluginEntrySource()` 把关，其余依赖一律拒绝；`entry.module` 同时禁止 `..` 路径穿越，读取产物前校验解析路径必须落在插件目录内。
+**entry 硬约束**：插件产物必须是单文件 ESM（`dist/*.mjs`，带 sha256 指纹），且只允许 `import '@airongrong/plugin-api'`（`ALLOWED_ENTRY_IMPORT`）；动态 `import()` 的参数同样必须是该字面量——计算型写法（如 `import('node:' + 'fs')`）一律拒绝。CLI 的 verify/pack 与宿主加载共用 `assertPluginEntrySource()` 把关，其余依赖一律拒绝；`entry.module` 同时禁止 `..` 路径穿越，读取产物前校验解析路径必须落在插件目录内。
 
 entry 源码校验示例（`aitoearn-plugin verify` 实际行为）：
 
 ```text
 ✓ 通过
-  import { z } from '@aitoearn/plugin-api'          // 静态导入允许包
-  await import('@aitoearn/plugin-api')              // 字面量动态导入允许包
+  import { z } from '@airongrong/plugin-api'          // 静态导入允许包
+  await import('@airongrong/plugin-api')              // 字面量动态导入允许包
 
 ✗ 拒绝（报 AIT-PL-001，verify/pack 均拦截）
   import axios from 'axios'                         // 非允许依赖
@@ -158,12 +158,12 @@ $ ls -l ~/.aitoearn/dev.pem
 
 深入字段说明见 [packages/plugin-api/README.md](packages/plugin-api/README.md)。
 
-### @aitoearn/capability —— 平台 / Agent / 集成方
+### @airongrong/capability —— 平台 / Agent / 集成方
 
 `capability.yaml` 是**能力单一事实源**：一个文件派生五个表面，避免 GUI / MCP / SDK / OpenAPI / 校验规则各自实现。
 
 ```bash
-pnpm add @aitoearn/capability
+pnpm add @airongrong/capability
 ```
 
 第一步，声明能力（节选）：
@@ -186,7 +186,7 @@ actions:
 第二步，代码里加载并派生：
 
 ```ts
-import { loadCapabilityManifest, generateAllSurfaces } from '@aitoearn/capability'
+import { loadCapabilityManifest, generateAllSurfaces } from '@airongrong/capability'
 
 const manifest = await loadCapabilityManifest('./capability.yaml') // 读取 + zod 校验，非法抛 PluginError
 const surfaces = generateAllSurfaces(manifest)
@@ -204,13 +204,13 @@ surfaces.validation  // 前后端共用校验（required / maxLength / maxItems 
 
 能力文件格式详见 [packages/capability/README.md](packages/capability/README.md)。
 
-### @aitoearn/plugin-cli —— 插件作者
+### @airongrong/plugin-cli —— 插件作者
 
 脚手架、校验、打包、签名一条龙。插件产物 `.aitpkg` 刻意不经过 npm（零依赖、可离线安装、签名校验）。
 
 ```bash
-npm i -g @aitoearn/plugin-cli      # 全局安装后命令名为 aitoearn-plugin
-# 或免安装：npx @aitoearn/plugin-cli <command>
+npm i -g @airongrong/plugin-cli      # 全局安装后命令名为 aitoearn-plugin
+# 或免安装：npx @airongrong/plugin-cli <command>
 ```
 
 | 命令 | 说明 |
@@ -276,7 +276,7 @@ git commit && push      # CI 开 Version PR
 - 每个包的 `prepublishOnly` 跑 [scripts/prepublish-guard.mjs](scripts/prepublish-guard.mjs)，
   拦下「未构建」「带 workspace 协议」「缺 LICENSE / README」「bin 入口缺失」等坏包。
 - 本仓本地开发不需要先发版：`.npmrc` 开了 `link-workspace-packages=true`，
-  版本匹配的 `@aitoearn/*` 会直接链接到 workspace 包。
+  版本匹配的 `@airongrong/*` 会直接链接到 workspace 包。
 
 ## 错误码体系
 
@@ -285,7 +285,7 @@ git commit && push      # CI 开 Version PR
 | `AIT-PL-001~008` | 插件生命周期（清单非法、哈希不匹配、签名不可信、版本不兼容、权限违规、激活超时、钩子拒绝、幂等冲突） | `AIT-PL-002` = 产物哈希不匹配 |
 | `AIT-AG-001~005` | Agent 操作（未授权、写未确认、限流、内容风控、撤销超时） | `AIT-AG-002` = 写操作未经确认 |
 
-错误码在 `@aitoearn/plugin-api` 中定义为 `PluginErrorCode` / `AgentErrorCode` 枚举，五个表面（MCP/GUI/OpenAPI/SDK/校验）共用同一份。
+错误码在 `@airongrong/plugin-api` 中定义为 `PluginErrorCode` / `AgentErrorCode` 枚举，五个表面（MCP/GUI/OpenAPI/SDK/校验）共用同一份。
 
 ## 兼容性
 

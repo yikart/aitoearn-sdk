@@ -1,6 +1,6 @@
 {
-  "name": "@aitoearn/capability",
-  "version": "1.0.0",
+  "name": "@airongrong/capability",
+  "version": "1.0.0-beta.0",
   "description": "AiToEarn capability manifest: single source of truth and generators for MCP tools, GUI forms, SDK clients, OpenAPI and validation rules",
   "license": "MIT",
   "type": "commonjs",
@@ -48,7 +48,7 @@
     "prepublishOnly": "node ../../scripts/prepublish-guard.mjs"
   },
   "dependencies": {
-    "@aitoearn/plugin-api": "1.0.0",
+    "@airongrong/plugin-api": "1.0.0-beta.0",
     "yaml": "^2.8.3",
     "zod": "^4.3.6"
   }

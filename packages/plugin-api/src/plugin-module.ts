@@ -30,6 +30,6 @@ export type PluginModule = AdapterPluginModule | HookPluginModule
 
 /**
  * 插件入口契约：默认导出或 activate 函数，宿主在 worker 内调用。
- * 模块内只允许 import '@aitoearn/plugin-api'（类型与工具，不打入产物）。
+ * 模块内只允许 import '@airongrong/plugin-api'（类型与工具，不打入产物）。
  */
 export type PluginActivate = (host: HostServices) => PluginModule | Promise<PluginModule>

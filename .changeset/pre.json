@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@airongrong/capability": "1.0.0-beta.0",
+    "@airongrong/plugin-api": "1.0.0-beta.0",
+    "@airongrong/plugin-cli": "1.0.0-beta.0"
+  },
+  "changesets": []
+}

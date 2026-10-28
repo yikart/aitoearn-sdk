@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  human-id: 4.1.1
+
 importers:
 
   .:
@@ -23,8 +26,8 @@ importers:
 
   packages/capability:
     dependencies:
-      '@aitoearn/plugin-api':
-        specifier: 1.0.0
+      '@airongrong/plugin-api':
+        specifier: 1.0.0-beta.0
         version: link:../plugin-api
       yaml:
         specifier: ^2.8.3
@@ -41,11 +44,11 @@ importers:
 
   packages/plugin-cli:
     dependencies:
-      '@aitoearn/capability':
-        specifier: 1.0.0
+      '@airongrong/capability':
+        specifier: 1.0.0-beta.0
         version: link:../capability
-      '@aitoearn/plugin-api':
-        specifier: 1.0.0
+      '@airongrong/plugin-api':
+        specifier: 1.0.0-beta.0
         version: link:../plugin-api
       commander:
         specifier: ^14.0.3
@@ -414,8 +417,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  human-id@4.2.2:
-    resolution: {integrity: sha512-Z+8unD6em/MJwyrkWQ2M3wygRGI1+MztbutiNwk1DCuEPXOZRWGjtcMPZYP1exY9iNZMhd7ZOSMQSo9WYtiQRw==}
+  human-id@4.1.1:
+    resolution: {integrity: sha512-3gKm/gCSUipeLsRYZbbdA1BD83lBoWUkZ7G9VFrhWPAU76KwYo5KR8V28bpoPm/ygy0x5/GCbpRQdY7VLYCoIg==}
     hasBin: true
 
   iconv-lite@0.4.24:
@@ -992,7 +995,7 @@ snapshots:
     dependencies:
       '@changesets/types': 6.1.0
       fs-extra: 7.0.1
-      human-id: 4.2.2
+      human-id: 4.1.1
       prettier: 2.8.8
 
   '@jridgewell/sourcemap-codec@1.6.0': {}
@@ -1256,7 +1259,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  human-id@4.2.2: {}
+  human-id@4.1.1: {}
 
   iconv-lite@0.4.24:
     dependencies:

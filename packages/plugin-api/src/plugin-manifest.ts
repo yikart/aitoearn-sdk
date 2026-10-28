@@ -104,7 +104,7 @@ export const pluginManifestSchema = z.object({
 export type PluginManifest = z.infer<typeof pluginManifestSchema>
 
 /** 插件产物只允许 import 这一个包，其余一律拒绝（§3.3-1 自包含单文件 ESM） */
-export const ALLOWED_ENTRY_IMPORT = '@aitoearn/plugin-api'
+export const ALLOWED_ENTRY_IMPORT = '@airongrong/plugin-api'
 
 const ENTRY_IMPORT_PATTERN = /(?:import|export)[^'"]*?from\s*['"]([^'"]+)['"]|import\s*\(\s*['"]([^'"]+)['"]/g
 

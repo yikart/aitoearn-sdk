@@ -1,15 +1,15 @@
-# @aitoearn/capability
+# @airongrong/capability
 
 `capability.yaml` 是 AiToEarn 的**能力单一事实源**：一个文件派生出五个表面，避免 GUI / MCP / SDK / OpenAPI / 校验规则各自走各自的实现。
 
 ```bash
-pnpm add @aitoearn/capability
+pnpm add @airongrong/capability
 ```
 
 ## 用法
 
 ```ts
-import { loadCapabilityManifest, generateAllSurfaces } from '@aitoearn/capability'
+import { loadCapabilityManifest, generateAllSurfaces } from '@airongrong/capability'
 
 const manifest = await loadCapabilityManifest('./capability.yaml')
 const surfaces = generateAllSurfaces(manifest)
@@ -19,7 +19,7 @@ const surfaces = generateAllSurfaces(manifest)
 CLI 侧一行生成五份产物：
 
 ```bash
-npx @aitoearn/plugin-cli cap --from ./capability.yaml --out ./generated
+npx @airongrong/plugin-cli cap --from ./capability.yaml --out ./generated
 ```
 
 ## 生成的五个表面

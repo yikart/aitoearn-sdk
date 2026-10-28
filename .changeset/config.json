@@ -3,7 +3,7 @@
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [
-    ["@aitoearn/plugin-api", "@aitoearn/capability", "@aitoearn/plugin-cli"]
+    ["@airongrong/plugin-api", "@airongrong/capability", "@airongrong/plugin-cli"]
   ],
   "linked": [],
   "access": "public",

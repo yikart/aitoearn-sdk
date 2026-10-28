@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto'
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { PluginErrorCode } from '@aitoearn/plugin-api'
+import { PluginErrorCode } from '@airongrong/plugin-api'
 import { afterEach, describe, expect, it } from 'vitest'
 import { verifyPluginPackage } from './package-files'
 
@@ -50,8 +50,8 @@ describe('verifyPluginPackage', () => {
     await expect(verifyPluginPackage(dir)).rejects.toMatchObject({ code: PluginErrorCode.InvalidManifest })
   })
 
-  it('@aitoearn/plugin-api 导入允许存在（宿主注入，不打入产物）', async () => {
-    const dir = await makeHookPackage('import { validateDraft } from \'@aitoearn/plugin-api\'\nexport async function activate() { return { hooks: {} } }\n')
+  it('@airongrong/plugin-api 导入允许存在（宿主注入，不打入产物）', async () => {
+    const dir = await makeHookPackage('import { validateDraft } from \'@airongrong/plugin-api\'\nexport async function activate() { return { hooks: {} } }\n')
     const manifest = await verifyPluginPackage(dir)
     expect(manifest.id).toBe('hook.cli-test')
   })

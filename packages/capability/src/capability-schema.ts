@@ -1,4 +1,4 @@
-import { PluginError, PluginErrorCode } from '@aitoearn/plugin-api'
+import { PluginError, PluginErrorCode } from '@airongrong/plugin-api'
 import { z } from 'zod'
 
 export enum CapabilitySideEffect {

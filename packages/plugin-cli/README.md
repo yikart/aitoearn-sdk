@@ -1,4 +1,4 @@
-# @aitoearn/plugin-cli
+# @airongrong/plugin-cli
 
 AiToEarn 插件开发 CLI：脚手架、校验、打包、签名一条龙。面向插件作者，运行时不进宿主沙箱。
 
@@ -6,14 +6,14 @@ AiToEarn 插件开发 CLI：脚手架、校验、打包、签名一条龙。面�
 
 ## 使用
 
-无需安装，npx 直接用（也可以全局安装 `npm i -g @aitoearn/plugin-cli`，命令名同为 `aitoearn-plugin`）：
+无需安装，npx 直接用（也可以全局安装 `npm i -g @airongrong/plugin-cli`，命令名同为 `aitoearn-plugin`）：
 
 ```bash
 # 脚手架
-npx @aitoearn/plugin-cli new channel.acme --type adapter
+npx @airongrong/plugin-cli new channel.acme --type adapter
 
 # 校验（清单 schema + 产物哈希 + 单文件 ESM 约束 + 路径穿越检查）
-npx @aitoearn/plugin-cli verify ./channel.acme
+npx @airongrong/plugin-cli verify ./channel.acme
 # 被拒绝的 entry 源码示例（报 AIT-PL-001）：
 #   import axios from 'axios'              —— 非允许依赖
 #   const m = await import('node:' + 'fs') —— 计算型动态 import
@@ -21,11 +21,11 @@ npx @aitoearn/plugin-cli verify ./channel.acme
 #   "dist/../../evil.mjs"                  —— 路径穿越（AIT-PL-001）
 
 # 打包 .aitpkg（store-only zip，无第三方依赖）
-npx @aitoearn/plugin-cli pack ./channel.acme
+npx @airongrong/plugin-cli pack ./channel.acme
 
 # 开发签名（adapter 必需）
-npx @aitoearn/plugin-cli keygen --out ~/.aitoearn
-npx @aitoearn/plugin-cli sign ./channel.acme --key ~/.aitoearn/dev.pem
+npx @airongrong/plugin-cli keygen --out ~/.aitoearn
+npx @airongrong/plugin-cli sign ./channel.acme --key ~/.aitoearn/dev.pem
 ```
 
 ## 命令
@@ -55,5 +55,5 @@ pnpm typecheck
 走 changesets：改完代码执行 `pnpm changeset` 写变更说明，合入 main 后 CI 开 Version PR，
 合并 Version PR 即自动 `changeset publish` 到 npm（需仓库 secret `NPM_TOKEN`）。
 
-注意版本联动：`plugin-cli` 对 `@aitoearn/plugin-api` / `@aitoearn/capability` 是 workspace 依赖，
+注意版本联动：`plugin-cli` 对 `@airongrong/plugin-api` / `@airongrong/capability` 是 workspace 依赖，
 changesets 发版时会自动转成精确版本号并联动 bump。

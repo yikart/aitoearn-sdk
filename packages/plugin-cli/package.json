@@ -1,6 +1,6 @@
 {
-  "name": "@aitoearn/plugin-cli",
-  "version": "1.0.0",
+  "name": "@airongrong/plugin-cli",
+  "version": "1.0.0-beta.0",
   "description": "AiToEarn plugin developer CLI: scaffold, verify, pack, sign channel adapters / hooks / skills and generate surfaces from capability.yaml",
   "license": "MIT",
   "type": "commonjs",
@@ -45,8 +45,8 @@
     "prepublishOnly": "node ../../scripts/prepublish-guard.mjs"
   },
   "dependencies": {
-    "@aitoearn/capability": "1.0.0",
-    "@aitoearn/plugin-api": "1.0.0",
+    "@airongrong/capability": "1.0.0-beta.0",
+    "@airongrong/plugin-api": "1.0.0-beta.0",
     "commander": "^14.0.3"
   }
 }

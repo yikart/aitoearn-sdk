@@ -1,9 +1,9 @@
-# @aitoearn/plugin-api
+# @airongrong/plugin-api
 
 AiToEarn 插件 SDK：插件作者唯一需要依赖的 npm 包。纯类型 + 少量校验逻辑，零 NestJS / 零宿主内部依赖。
 
 ```bash
-pnpm add @aitoearn/plugin-api
+pnpm add @airongrong/plugin-api
 ```
 
 ## 你能拿到什么
@@ -21,7 +21,7 @@ pnpm add @aitoearn/plugin-api
 ## 最小渠道适配器
 
 ```ts
-import { Capability, ValidationIssueSeverity, type ChannelAdapter, type HostServices } from '@aitoearn/plugin-api'
+import { Capability, ValidationIssueSeverity, type ChannelAdapter, type HostServices } from '@airongrong/plugin-api'
 
 export default function activate(host: HostServices): { adapter: ChannelAdapter } {
   return {
@@ -47,7 +47,7 @@ export default function activate(host: HostServices): { adapter: ChannelAdapter 
 完整字段见 `ChannelAdapter` / `PostDraft`（`draftId` 为幂等键，重复提交必须返回同一结果）。
 草稿示例：`visibility: DraftVisibility.Public`、`blocks`、`topics` 等。
 
-产物约束：插件 entry 只允许 `import '@aitoearn/plugin-api'`（见 `ALLOWED_ENTRY_IMPORT`），
+产物约束：插件 entry 只允许 `import '@airongrong/plugin-api'`（见 `ALLOWED_ENTRY_IMPORT`），
 动态 `import()` 的参数同样必须是该字面量——计算型写法（如 `import('node:' + 'fs')`）在校验时被拒绝，
 其他依赖一律拒绝，保证 `.aitpkg` 可离线、零依赖安装。`entry.module` 禁止包含 `..` 路径穿越。
 

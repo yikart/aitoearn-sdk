@@ -1,7 +1,7 @@
 import { createHash, generateKeyPairSync, sign as signData } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
-import { PluginError, PluginErrorCode } from '@aitoearn/plugin-api'
+import { PluginError, PluginErrorCode } from '@airongrong/plugin-api'
 import { readPluginPackage } from './package-files'
 
 /** 签名对象：entry 产物的 sha256 十六进制字符串（与宿主 loader 校验口径一致） */
