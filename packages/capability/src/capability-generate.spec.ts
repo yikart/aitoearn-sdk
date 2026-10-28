@@ -52,7 +52,7 @@ describe('capability generators', () => {
     const surfaces = generateAllSurfaces(SAMPLE as never)
     expect(Object.keys(surfaces)).toEqual(['mcp', 'ui', 'openapi', 'sdk', 'validation'])
     expect(surfaces.openapi['paths']).toHaveProperty('/actions/publish_post')
-    expect(surfaces.sdk).toContain('export interface Publish_postInput')
+    expect(surfaces.sdk).toContain('export interface PublishPostInput')
   })
 
   it('缺省 inputs/errors/confirm 的原始清单也能派生（schema 自动补默认值）', () => {
@@ -66,6 +66,29 @@ describe('capability generators', () => {
 
   it('非法清单抛 PluginError 而不是 TypeError', () => {
     expect(() => generateAllSurfaces({ version: 0, actions: {} } as never)).toThrowError(/AIT-PL-001|capability\.yaml 非法/)
+  })
+
+  it('SDK 类型：必填字段（无 default 且非 hidden）不带 ?', () => {
+    const { sdk } = generateAllSurfaces(SAMPLE as never)
+    // text / images 无 default 且非 hidden → 必填
+    expect(sdk).toContain('  text: string')
+    expect(sdk).toContain('  images: string[]')
+    // dryRun 有 default 且 hidden → 可选
+    expect(sdk).toContain('  dryRun?: boolean')
+  })
+
+  it('SDK 类型：yaml 已声明 dryRun 时不再重复追加', () => {
+    const { sdk } = generateAllSurfaces(SAMPLE as never)
+    const dryRunLines = sdk.split('\n').filter(line => line.trim() === 'dryRun?: boolean')
+    expect(dryRunLines).toHaveLength(1)
+  })
+
+  it('SDK 类型：action 名转 PascalCase（publish_post → PublishPost）', () => {
+    const { sdk } = generateAllSurfaces(SAMPLE as never)
+    expect(sdk).toContain('PublishPostInput')
+    expect(sdk).toContain('PublishPostResult')
+    expect(sdk).toContain('  publish_post(input: PublishPostInput): Promise<PublishPostResult>')
+    expect(sdk).not.toContain('Publish_post')
   })
 })
 

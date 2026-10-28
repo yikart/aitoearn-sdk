@@ -187,12 +187,15 @@ export function generateSdkTypes(manifest: CapabilityManifest): string {
     '',
   ]
   for (const [name, action] of Object.entries(manifest.actions)) {
-    const pascal = name.charAt(0).toUpperCase() + name.slice(1)
+    const pascal = pascalCase(name)
     lines.push(`export interface ${pascal}Input {`)
     for (const [field, input] of Object.entries(action.inputs)) {
-      lines.push(`  ${field}${input.default === undefined || input.hidden ? '?' : ''}: ${tsTypeOf(input)}`)
+      const optional = input.default !== undefined || input.hidden === true
+      lines.push(`  ${field}${optional ? '?' : ''}: ${tsTypeOf(input)}`)
     }
-    lines.push('  dryRun?: boolean')
+    if (!('dryRun' in action.inputs)) {
+      lines.push('  dryRun?: boolean')
+    }
     lines.push('  confirmToken?: string')
     lines.push('}')
     lines.push(`export interface ${pascal}Result extends Record<string, unknown> {}`)
@@ -200,12 +203,19 @@ export function generateSdkTypes(manifest: CapabilityManifest): string {
   }
   lines.push('export interface CapabilityClient {')
   for (const name of Object.keys(manifest.actions)) {
-    const pascal = name.charAt(0).toUpperCase() + name.slice(1)
+    const pascal = pascalCase(name)
     lines.push(`  ${name}(input: ${pascal}Input): Promise<${pascal}Result>`)
   }
   lines.push('}')
   lines.push('')
   return lines.join('\n')
+}
+
+function pascalCase(name: string): string {
+  return name
+    .split('_')
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('')
 }
 
 function tsTypeOf(input: CapabilityInput): string {
