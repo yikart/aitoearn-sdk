@@ -39,6 +39,7 @@ describe('pluginManifestSchema 反例测试', () => {
     ['type 非法', { ...validHookManifest, type: 'channel' }],
     ['entry.module 不在 dist', { ...validHookManifest, entry: { ...validHookManifest.entry, module: './src/index.mjs' } }],
     ['entry.module 非 mjs', { ...validHookManifest, entry: { ...validHookManifest.entry, module: './dist/index.js' } }],
+    ['entry.module 路径穿越', { ...validHookManifest, entry: { ...validHookManifest.entry, module: 'dist/../../evil.mjs' } }],
     ['entry.sha256 非 64 位', { ...validHookManifest, entry: { ...validHookManifest.entry, sha256: 'abcd' } }],
     ['entry.sha256 含大写', { ...validHookManifest, entry: { ...validHookManifest.entry, sha256: `A${validHookManifest.entry.sha256.slice(1)}` } }],
     ['network 使用通配符', { ...validHookManifest, permissions: { network: ['*.example.com'] } }],

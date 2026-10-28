@@ -92,6 +92,13 @@ export const pluginManifestSchema = z.object({
       message: `${manifest.type} 插件必须声明 entry（单文件 ESM 产物与 sha256）`,
     })
   }
+  if (manifest.entry?.module.split('/').includes('..')) {
+    context.addIssue({
+      code: 'custom',
+      path: ['entry', 'module'],
+      message: 'entry.module 禁止包含路径穿越（..）',
+    })
+  }
   if (manifest.publisher && !manifest.publisher.id && !manifest.publisher.name) {
     context.addIssue({
       code: 'custom',

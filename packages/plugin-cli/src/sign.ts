@@ -23,7 +23,7 @@ export async function generateDevKeys(outDir: string): Promise<{ privateKeyPath:
   const privateKeyPath = join(outDir, 'dev.pem')
   const publicKeyPath = join(outDir, 'dev.pub')
   await mkdir(dirname(privateKeyPath), { recursive: true })
-  await writeFile(privateKeyPath, privateKey.export({ type: 'pkcs8', format: 'pem' }))
+  await writeFile(privateKeyPath, privateKey.export({ type: 'pkcs8', format: 'pem' }), { mode: 0o600 })
   await writeFile(publicKeyPath, publicKey.export({ type: 'spki', format: 'pem' }))
   return { privateKeyPath, publicKeyPath }
 }
